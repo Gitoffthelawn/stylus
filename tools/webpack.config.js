@@ -156,7 +156,8 @@ module.exports = [
         name: 'common',
       },
       splitChunks: {
-        chunks: c => !c.name?.match(/jsonlint|lazy/),
+        minChunks: 2,
+        chunks: c => !/jsonlint|lazy|cloud/.test(c.name || c.id),
         cacheGroups: {
           codemirror: {
             test: new RegExp([
