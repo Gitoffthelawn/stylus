@@ -72,7 +72,7 @@ export async function login(name) {
   await revokeToken(name);
   try {
     await getToken(name, true);
-    status.login = true;
+    return (status.login = true);
   } catch (err) {
     status.login = false;
     throw err;
@@ -109,23 +109,18 @@ async function doStart(name) {
   if ((ctrl ??= initController()).then) ctrl = await ctrl;
   if (curDrive) return;
   curDriveName = name;
-  curDrive = getDrive(name).catch(console.error); // preventing re-entry by assigning synchronously
+  curDrive = getDrive(name).catch(onStartError); // preventing re-entry by assigning synchronously
   curDrive = await curDrive;
+  if (!curDrive)
+    return;
   ctrl.use(curDrive);
   status.state = STATES.connecting;
   status.drive = curDriveName;
   emitStatusChange();
   if (isInit || NO_LOGIN.includes(curDriveName)) {
     status.login = true;
-  } else {
-    try {
-      await login(name);
-    } catch (err) {
-      console.error(err);
-      setError(err);
-      emitStatusChange();
-      return stop();
-    }
+  } else if (!await login(name).catch(onStartError)) {
+    return;
   }
   await ctrl.init();
   if (isStop) return;
@@ -133,6 +128,13 @@ async function doStart(name) {
   prefs.set(PREF_ID, name);
   status.state = STATES.connected;
   emitStatusChange();
+}
+
+function onStartError(err) {
+  console.error(err);
+  setError(err);
+  emitStatusChange();
+  return stop();
 }
 
 export async function stop() {
