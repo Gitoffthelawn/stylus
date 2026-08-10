@@ -140,6 +140,15 @@
     "message": "Word wrap",
     "description": "Label for the checkbox controlling word wrap option for the style editor."
   },
+  "cm_lineWrappingOff": {
+    "message": "$length$k long line detected, text wrapping was disabled to ensure the browser doesn't crash or hang",
+    "description": "Warning in the editor, $length$ is replaced with a number: '100k long line...'",
+    "placeholders": {
+      "length": {
+        "content": "$1"
+      }
+    }
+  },
   "cm_linter": {
     "message": "Validate CSS",
     "description": "Select the linter to check for CSS issues"

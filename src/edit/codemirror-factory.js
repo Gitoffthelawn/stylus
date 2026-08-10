@@ -5,7 +5,7 @@ import {template} from '@/js/localization';
 import {swController} from '@/js/msg-init';
 import * as prefs from '@/js/prefs';
 import {styleJSONseemsValid, styleToCss} from '@/js/style-util';
-import {tryJSONparse} from '@/js/util';
+import {t, tryJSONparse} from '@/js/util';
 import editor from './editor';
 import {rerouteHotkeys} from './util';
 
@@ -72,18 +72,21 @@ const onCmBlur = cm => {
   });
 };
 const onCmBeforeChange = (cm, {text}) => {
-  const max = Math.max(cm.options.maxHighlightLength, 100e3);
-  for (const line of text) {
-    if (line.length > max) {
+  const opts = cm.options;
+  const max = Math.max(opts.maxHighlightLength, 100e3);
+  if (!text && opts.value.length < max)
+    return;
+  (text ? text.some : cm.eachLine).call(text || cm, line => {
+    line = (text ? line : line.text).length;
+    if (line > max) {
       const el = $('#lineWrapping-label + a', template[kEditorSettings]);
       el.hidden = false;
-      el.title = (line.length / 1000 | 0) + 'k long line detected, text wrapping was disabled ' +
-        "to ensure the browser doesn't crash or hang";
+      el.title = t('cm_lineWrappingOff', [Math.round(line / 1000)]);
       el.parentElement.on('change', evt => !evt.target.checked && (el.hidden = true), {once: true});
       cm.setOption(kLineWrapping, false);
-      break;
+      return true;
     }
-  }
+  });
 };
 const onCmOption = (cm, name) => {
   if (name === kLineWrapping) {
@@ -112,7 +115,10 @@ CodeMirror.defineInitHook(cm => {
   cm.on('blur', onCmBlur);
   cm.on('optionChange', onCmOption);
   cm.on('paste', maybeImportOnPaste);
-  if (cm.options[kLineWrapping]) cm.on('beforeChange', onCmBeforeChange);
+  if (cm.options[kLineWrapping]) {
+    cm.on('beforeChange', onCmBeforeChange);
+    onCmBeforeChange(cm, {});
+  }
 });
 
 // propagated preferences
