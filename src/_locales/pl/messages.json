@@ -106,6 +106,14 @@
   "cm_lineWrapping": {
     "message": "Zawijanie tekstu"
   },
+  "cm_lineWrappingOff": {
+    "message": "Wykryto wiersz o długości $length$k, wyłączono zawijanie tekstu, aby zapobiec awarii lub zawieszeniu się przeglądarki",
+    "placeholders": {
+      "length": {
+        "content": "$1"
+      }
+    }
+  },
   "cm_linter": {
     "message": "Sprawdź poprawność CSS"
   },

@@ -175,9 +175,6 @@
   "confirmNo": {
     "message": "Nie"
   },
-  "confirmOK": {
-    "message": "OK"
-  },
   "confirmSave": {
     "message": "Uložiť"
   },
@@ -195,30 +192,6 @@
   },
   "customNameResetHint": {
     "message": "Prestať používať vlastný názov, prepnúť na pôvodný názov štýlu"
-  },
-  "dateAbbrDay": {
-    "message": "$value$d",
-    "placeholders": {
-      "value": {
-        "content": "$1"
-      }
-    }
-  },
-  "dateAbbrHour": {
-    "message": "$value$h",
-    "placeholders": {
-      "value": {
-        "content": "$1"
-      }
-    }
-  },
-  "dateAbbrMonth": {
-    "message": "$value$m",
-    "placeholders": {
-      "value": {
-        "content": "$1"
-      }
-    }
   },
   "dateAbbrYear": {
     "message": "$value$r",
@@ -332,11 +305,11 @@
   "filteredStyles": {
     "message": "Zobrazených $numShown$ z $numTotal$",
     "placeholders": {
-      "numTotal": {
-        "content": "$2"
-      },
       "numShown": {
         "content": "$1"
+      },
+      "numTotal": {
+        "content": "$2"
       }
     }
   },
@@ -376,12 +349,6 @@
   "genericHistoryLabel": {
     "message": "História"
   },
-  "genericMaximum": {
-    "message": "maximum"
-  },
-  "genericMinimum": {
-    "message": "minimum"
-  },
   "genericNext": {
     "message": "Ďalej"
   },
@@ -393,9 +360,6 @@
   },
   "genericSize": {
     "message": "Veľkosť"
-  },
-  "genericTest": {
-    "message": "Test"
   },
   "genericTitle": {
     "message": "Názov"
@@ -512,9 +476,6 @@
   },
   "linkGetStyles": {
     "message": "Získať štýly"
-  },
-  "linkStylusWiki": {
-    "message": "Wiki"
   },
   "linkTranslate": {
     "message": "Preložiť"
@@ -694,11 +655,11 @@
   "meta_invalidRangeUnits": {
     "message": "Neplatné @var $type$: „$units$“ nie je platná jednotka",
     "placeholders": {
-      "units": {
-        "content": "$2"
-      },
       "type": {
         "content": "$1"
+      },
+      "units": {
+        "content": "$2"
       }
     }
   },
@@ -805,11 +766,11 @@
   "meta_unknownVarType": {
     "message": "Neznámy typ @$varkey$: $vartype$",
     "placeholders": {
-      "vartype": {
-        "content": "$2"
-      },
       "varkey": {
         "content": "$1"
+      },
+      "vartype": {
+        "content": "$2"
       }
     }
   },
@@ -1416,11 +1377,11 @@
       "stylename": {
         "content": "$1"
       },
-      "newVersion": {
-        "content": "$3"
-      },
       "oldVersion": {
         "content": "$2"
+      },
+      "newVersion": {
+        "content": "$3"
       }
     }
   },

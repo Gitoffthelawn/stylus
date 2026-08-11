@@ -391,6 +391,9 @@
   "importLabel": {
     "message": "Importar"
   },
+  "importPreprocessor": {
+    "message": "Estilos que dependem de <@preprocessor> não funcionarão, pois o estilo não foi criado no modo<UserCSS>."
+  },
   "importReplaceLabel": {
     "message": "Sobrescrever estilo"
   },
@@ -540,6 +543,9 @@
   "manageFilters": {
     "message": "Filtros"
   },
+  "manageNewUI": {
+    "message": "Layout em tabela"
+  },
   "manageOnlyDisabled": {
     "message": "Somente estilos desativados"
   },
@@ -576,6 +582,14 @@
   "meta_invalidCheckboxDefault": {
     "message": "Inválida @var checkbox: o valor deve ser 0 ou 1"
   },
+  "meta_invalidColor": {
+    "message": "@var color inválida: $color$ não é uma cor.",
+    "placeholders": {
+      "color": {
+        "content": "$1"
+      }
+    }
+  },
   "meta_invalidNumber": {
     "message": "Espera-se um número"
   },
@@ -587,8 +601,93 @@
       }
     }
   },
+  "meta_invalidRangeDefault": {
+    "message": "@var $type$ inválido: o valor padrão é null",
+    "placeholders": {
+      "type": {
+        "content": "$1"
+      }
+    }
+  },
+  "meta_invalidRangeMax": {
+    "message": "@var $type$ inválido: o valor padrão é maior que o máximo",
+    "placeholders": {
+      "type": {
+        "content": "$1"
+      }
+    }
+  },
+  "meta_invalidRangeMin": {
+    "message": "@var $type$ inválido: o valor padrão é menor que o mínimo",
+    "placeholders": {
+      "type": {
+        "content": "$1"
+      }
+    }
+  },
+  "meta_invalidRangeMultipleUnits": {
+    "message": "@var $type$ inválido: estão definidas várias unidades",
+    "placeholders": {
+      "type": {
+        "content": "$1"
+      }
+    }
+  },
+  "meta_invalidRangeStep": {
+    "message": "@var $type$ inválido: o valor não é múltiplo do passo",
+    "placeholders": {
+      "type": {
+        "content": "$1"
+      }
+    }
+  },
+  "meta_invalidRangeTooManyValues": {
+    "message": "@var $type$ inválido: o array contém excesso de itens",
+    "placeholders": {
+      "type": {
+        "content": "$1"
+      }
+    }
+  },
+  "meta_invalidRangeUnits": {
+    "message": "@var $type$ inválido: '$units$' não é uma unidade válida",
+    "placeholders": {
+      "type": {
+        "content": "$1"
+      },
+      "units": {
+        "content": "$2"
+      }
+    }
+  },
+  "meta_invalidRangeValue": {
+    "message": "var $type$ inválido: os itens do array devem ser números, strings ou null",
+    "placeholders": {
+      "type": {
+        "content": "$1"
+      }
+    }
+  },
+  "meta_invalidSelect": {
+    "message": "@var select inválido: o valor padrão deve ser um array ou objeto"
+  },
   "meta_invalidSelectEmptyOptions": {
     "message": "@var select inválido: a lista de opções está vazia"
+  },
+  "meta_invalidSelectLabel": {
+    "message": "@var select inválido: O rótulo da opção está vazio"
+  },
+  "meta_invalidSelectMultipleDefaults": {
+    "message": "@var select inválido: estão definidas várias opções padrões"
+  },
+  "meta_invalidSelectNameDuplicated": {
+    "message": "@var select inválido: o nome da opção está duplicado"
+  },
+  "meta_invalidSelectValue": {
+    "message": "@var select inválido: os valores dentro do array/objeto precisam ser strings"
+  },
+  "meta_invalidSelectValueMismatch": {
+    "message": "@var select inválido: o valor não existe na lista de opções"
   },
   "meta_invalidString": {
     "message": "Espera-se um texto entre aspas"
@@ -626,10 +725,26 @@
       }
     }
   },
+  "meta_unknownJSONLiteral": {
+    "message": "JSON inválido: $literal$ não é um valor JSON válido",
+    "placeholders": {
+      "literal": {
+        "content": "$1"
+      }
+    }
+  },
   "meta_unknownMeta": {
     "message": "Metadata desconhecido: $key$",
     "placeholders": {
       "key": {
+        "content": "$1"
+      }
+    }
+  },
+  "meta_unknownPreprocessor": {
+    "message": "@preprocessor desconhecido: $preprocessor$",
+    "placeholders": {
+      "preprocessor": {
         "content": "$1"
       }
     }
@@ -648,6 +763,9 @@
   "newStyleAsUserCSS": {
     "message": "Escrever novo estilo como UserCSS"
   },
+  "newStyleAsUserCSSHint": {
+    "message": "Ativar essa opção também altera o estilo atual no editor se ele for novo, isto é, se acabou de ser criado e não foi editado ou salvo ainda."
+  },
   "noStylesForSite": {
     "message": "Nenhum estilo instalado para este site."
   },
@@ -663,8 +781,51 @@
   "openOptions": {
     "message": "Opções"
   },
+  "optionCompactWidth": {
+    "message": "Largura máxima da janela para o layout compacto da UI (em pixels)"
+  },
+  "optionConfigSidePanel": {
+    "message": "Configuração do UserCSS"
+  },
+  "optionFOUC": {
+    "message": "Os estilos estão sendo aplicados tarde demais?"
+  },
+  "optionFOUCMV2": {
+    "message": "Considere ativar \"$optInst$\".",
+    "placeholders": {
+      "optInst": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionFOUCMV3": {
+    "message": "Considere ativar \"$optInst$\" e aumentar \"$optCache$\".",
+    "placeholders": {
+      "optInst": {
+        "content": "$1"
+      },
+      "optCache": {
+        "content": "$2"
+      }
+    }
+  },
   "optionKeepAlive": {
     "message": "Duração do cache de estilos"
+  },
+  "optionKeepAlive2": {
+    "message": "(em minutos, -1 = sem limite)"
+  },
+  "optionKeepAliveIdle": {
+    "message": "...mesmo que o navegador esteja inativo"
+  },
+  "optionSidePanelActions": {
+    "message": "Painel lateral para as ações de pop-up"
+  },
+  "optionSidePanelPopup": {
+    "message": "Abrir pop-up em um painel lateral"
+  },
+  "optionTargetIcons": {
+    "message": "Ícones para os sites de destino"
   },
   "optionTargetIconsNote": {
     "message": "O Stylus usa um serviço externo $SRV$",
@@ -674,14 +835,41 @@
       }
     }
   },
+  "optionTargetNum": {
+    "message": "Número de sites de destino"
+  },
   "optionsAdvanced": {
     "message": "Avançadas"
+  },
+  "optionsAdvancedAutoSwitchSchemeBySystem": {
+    "message": "Seguir as preferências do sistema"
+  },
+  "optionsAdvancedAutoSwitchSchemeByTime": {
+    "message": "Por horário noturno:"
+  },
+  "optionsAdvancedAutoSwitchSchemeNever": {
+    "message": "Desativado. As configurações de modo escuro/claro nos estilos são ignoradas."
   },
   "optionsAdvancedContextDelete": {
     "message": "Adicionar 'Eliminar' no menu de contexto do editor"
   },
   "optionsAdvancedExposeIframes": {
     "message": "Expor <iframe>s via <html[stylus-iframe]>"
+  },
+  "optionsAdvancedExposeStyleName": {
+    "message": "Expor o nome do estilo"
+  },
+  "optionsAdvancedPatchCsp": {
+    "message": "Ajustar a <CSP> para permitir recursos do estilo"
+  },
+  "optionsAdvancedSites": {
+    "message": "...apenas em sites correspondentes"
+  },
+  "optionsAdvancedSitesNote": {
+    "message": "<abc.com> um site.\n<*.abc.com> site + subdomínios.\n<-m.abc.com> exclusão usando o prefixo \"-\".\n<*> todos os sites (útil com exclusões).\n<#abc.com> ignorado devido a caractere inválido.\n<*://abc.*/xyz> padrão de glob simples.\n<https://abc.com/xyz> URL completa.\nAs entradas são separadas por um espaço ou por uma nova linha. O texto é salvo automaticamente ao pressionar Ctrl-S ou ⌘S no campo, ao clicar fora dele ou ao fechar as opções."
+  },
+  "optionsAdvancedStyleViaASS": {
+    "message": "Contornar <CSP> <style-src> através de <adoptedStyleSheets>"
   },
   "optionsBadgeDisabled": {
     "message": "Cor de fundo quando desativado"
@@ -703,6 +891,9 @@
   },
   "optionsHeading": {
     "message": "Opções"
+  },
+  "optionsIconAuto": {
+    "message": "Seguir o modo Escuro/Claro"
   },
   "optionsIconDark": {
     "message": "Temas escuros do browser"
@@ -752,8 +943,14 @@
   "optionsSyncSyncNow": {
     "message": "Sincronizar agora"
   },
+  "optionsSyncUsername": {
+    "message": "Nome de usuário"
+  },
   "optionsUpdateInterval": {
     "message": "Intervalo de atualização automática do estilo de usuário em horas (especifique 0 para desativar)"
+  },
+  "optionsUrlInstaller": {
+    "message": "Abrir o instalador de estilos UserCSS em qualquer site"
   },
   "overwriteFileExport": {
     "message": "Você gostaria de substituir um arquivo existente?"
@@ -788,6 +985,9 @@
   "popupHotkeysTooltip": {
     "message": "Clique para ver as teclas de atalho disponíveis"
   },
+  "popupMenuButtonTooltip": {
+    "message": "Menu de ações"
+  },
   "popupOpenEditInWindow": {
     "message": "Abra o editor em uma nova janela"
   },
@@ -799,6 +999,12 @@
   },
   "prefShowBadge": {
     "message": "Número de estilos ativos para o site atual"
+  },
+  "preferScheme": {
+    "message": "Preferência de modo Escuro/Claro"
+  },
+  "preferSchemeAlways": {
+    "message": "Atualmente ignorado (o estilo é sempre aplicado) pois o modo Escuro/Claro global está desativado"
   },
   "preferSchemeDark": {
     "message": "Escuro"
@@ -818,8 +1024,14 @@
   "publish": {
     "message": "Publicar"
   },
+  "publishPush": {
+    "message": "Enviar atualização"
+  },
   "publishStyle": {
     "message": "Publicar estilo"
+  },
+  "publishUsw": {
+    "message": "Usando <userstyles.world>"
   },
   "reload": {
     "message": "Recarregar"
@@ -832,6 +1044,12 @@
   },
   "replaceWith": {
     "message": "Substituir com"
+  },
+  "reportBug": {
+    "message": "Reportar erro"
+  },
+  "saveAsTemplate": {
+    "message": "Salvar como modelo"
   },
   "saved": {
     "message": "Salvo"
@@ -869,8 +1087,20 @@
   "searchResultWeeklyCount": {
     "message": "Instalações semanais"
   },
+  "searchStylesAll": {
+    "message": "Todos"
+  },
   "searchStylesCode": {
     "message": "Código CSS"
+  },
+  "searchStylesMatchUrl": {
+    "message": "Por URL"
+  },
+  "searchStylesMeta": {
+    "message": "Metadados"
+  },
+  "searchStylesName": {
+    "message": "Nome"
   },
   "sectionAdd": {
     "message": "Adicionar outra seção"
@@ -886,6 +1116,9 @@
   },
   "sections": {
     "message": "Seções"
+  },
+  "settings": {
+    "message": "Configurações"
   },
   "shortcuts": {
     "message": "Atalhos"
@@ -935,14 +1168,26 @@
   "styleChangesNotSaved": {
     "message": "Você fez alterações neste estilo sem salvar."
   },
+  "styleEditor": {
+    "message": "Editor de estilos"
+  },
   "styleEnabledLabel": {
     "message": "Ativado"
+  },
+  "styleForceTab": {
+    "message": "Apenas na aba atual"
   },
   "styleFromMozillaFormatError": {
     "message": "Falha ao importar do formato Mozilla"
   },
   "styleFromMozillaFormatPrompt": {
     "message": "Colar o código formato-Mozilla"
+  },
+  "styleInjectionImportance": {
+    "message": "Alternar a importância do estilo"
+  },
+  "styleInjectionOrder": {
+    "message": "Ordem de injeção de estilos"
   },
   "styleInstallFailed": {
     "message": "Falha ao instalar o estilo de usuário!\n$error$",
@@ -966,14 +1211,42 @@
       }
     }
   },
+  "styleManager": {
+    "message": "Gestor de estilos"
+  },
   "styleMissingName": {
     "message": "Insira um nome"
   },
   "styleName": {
     "message": "Nome do estilo"
   },
+  "styleNotAppliedExcluded": {
+    "message": "Excluído por \"$EXC$\" nas configurações de estilo",
+    "placeholders": {
+      "EXC": {
+        "content": "$1"
+      }
+    }
+  },
+  "styleNotAppliedExcludedTab": {
+    "message": "Excluído para a aba atual no menu de estilos"
+  },
+  "styleNotAppliedOverridden": {
+    "message": "Seu \"$INC$\" nas configurações de estilo sobrepõe os sites originais do estilo",
+    "placeholders": {
+      "INC": {
+        "content": "$1"
+      }
+    }
+  },
   "styleNotAppliedRegexpProblemTooltip": {
     "message": "O estilo não foi aplicado devido ao uso incorreto de 'regexp ()'"
+  },
+  "styleNotAppliedSchemeDark": {
+    "message": "Esse estilo é aplicado apenas no modo escuro"
+  },
+  "styleNotAppliedSchemeLight": {
+    "message": "Esse estilo é aplicado apenas no modo claro"
   },
   "stylePreferSchemeLabel": {
     "message": "Modo Escuro/Claro"
@@ -1008,6 +1281,18 @@
   "styleSaveLabel": {
     "message": "Salvar"
   },
+  "styleSettings": {
+    "message": "Configurações do estilo"
+  },
+  "styleSitesExclude": {
+    "message": "Sites pessoais excluídos"
+  },
+  "styleSitesInclude": {
+    "message": "Sites pessoais incluídos"
+  },
+  "styleSitesIncludeOvr": {
+    "message": "sobrepor o estilo"
+  },
   "styleToMozillaFormatHelp": {
     "message": "O formato Mozilla do código pode ser usado com o Stylish para Firefox e pode ser enviado para userstyles.org."
   },
@@ -1026,17 +1311,20 @@
   "stylusUnavailableForURLdetails": {
     "message": "Como precaução de segurança, o browser proíbe extensões de afetar as páginas embutidas (como chrome://version, a página de novo separador predefinido no Chrome 61, about:addons, e assim sucessivamente) tal como páginas de outras extensões. Cada browser também restringe acesso à sua própria galeria de extensões (como Chrome Web Store ou AMO)"
   },
+  "syncError": {
+    "message": "A sincronização falhou"
+  },
   "syncStorageErrorSaving": {
     "message": "O valor não pode ser guardado. Tente reduzir a quantidade de texto."
   },
   "toggleCurrentTab": {
-    "message": "Ativar na aba atual"
+    "message": "Alternar na aba atual"
   },
   "toggleStyle": {
     "message": "Alternar estilo"
   },
   "toggleStylesHeading": {
-    "message": "Ativar estilos"
+    "message": "Alternar estilos"
   },
   "toggleStylesPerm": {
     "message": "permanentemente"
