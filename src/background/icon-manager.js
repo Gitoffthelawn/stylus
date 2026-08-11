@@ -1,7 +1,7 @@
 import {kDisableAll, kSidebar, kStyleIds} from '@/js/consts';
 import {__values as __prefs, subscribe} from '@/js/prefs';
 import {CHROME, FIREFOX, MOBILE, VIVALDI} from '@/js/ua';
-import {debounce, deepCopy, NOP, t} from '@/js/util';
+import {debounce, deepCopy, NOP} from '@/js/util';
 import {
   browserAction, browserSidebar, MF_ICON_EXT, MF_ICON_PATH, openSidebar, paintCanvas,
   toggleListener,
@@ -14,7 +14,6 @@ import {tabCache, set as tabSet} from './tab-manager';
 const staleBadges = new Set();
 /** @type {{ [url: string]: ImageData | Promise<ImageData> }} */
 const imageDataCache = {};
-const badgeOvr = {color: '', text: ''};
 // https://github.com/openstyles/stylus/issues/1287 Fenix can't use custom ImageData
 const FIREFOX_ANDROID = (__.B_FIREFOX || __.B_ANY && FIREFOX) && MOBILE;
 const ICON_SIZES =
@@ -28,6 +27,7 @@ const kIconset = 'iconset';
 const kShowBadge = 'show-badge';
 // https://github.com/openstyles/stylus/issues/335
 let hasCanvas = FIREFOX_ANDROID ? false : null;
+let badgeError = '';
 
 if (browserAction) {
   bgInit.push(initIcons);
@@ -102,30 +102,30 @@ export function updateIconBadge(styleIds, lazyBadge, iid) {
   removePreloadedStyles(null, tabId + ':' + frameId);
 }
 
-  /** Calling with no params clears the override */
-export function overrideBadge({text = '', color = '', title = ''} = {}) {
-  if (badgeOvr.text === text) {
+export function setErrorBadge(text) {
+  if (badgeError === text) {
     return;
   }
-  badgeOvr.text = text;
-  badgeOvr.color = color;
+  badgeError = text;
   refreshIconBadgeColor();
-  setBadgeText({text});
+  const badge = {text: 'x'};
+  setBadgeText(badge);
   for (let tabId in tabCache) {
     tabId = +tabId;
-    if (text) {
-      setBadgeText({tabId, text});
+    if (badgeError) {
+      badge.tabId = tabId;
+      setBadgeText(badge);
     } else {
       refreshIconBadgeText(tabId);
     }
   }
   browserAction.setTitle({
-    title: title && t(title, '', false) || title || '',
+    title: text || 'Stylus', // in Chrome an empty title is seemingly ignored
   }).catch(NOP);
 }
 
 function refreshIconBadgeText(tabId) {
-  if (badgeOvr.text) return;
+  if (badgeError) return;
   const text = __prefs[kShowBadge] ? `${getStyleCount(tabId)}` : '';
   setBadgeText({tabId, text});
 }
@@ -202,7 +202,7 @@ function refreshGlobalIcon() {
 
 function refreshIconBadgeColor() {
   setBadgeBackgroundColor({
-    color: badgeOvr.color ||
+    color: badgeError ? '#F00' :
       __prefs[__prefs[kDisableAll] ? kBadgeDisabled : kBadgeNormal],
   });
 }

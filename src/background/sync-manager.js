@@ -9,7 +9,7 @@ import {broadcastExtension} from './broadcast';
 import {bgBusy, uuidIndex} from './common';
 import {db} from './db';
 import {cloudDrive, dbToCloud} from './db-to-cloud-broker';
-import {overrideBadge} from './icon-manager';
+import {setErrorBadge} from './icon-manager';
 import * as styleMan from './style-manager';
 import {onSaved} from './style-manager/fixer';
 import {getByUuid, styleMap} from './style-manager/util';
@@ -248,14 +248,14 @@ function initController() {
 
 function emitStatusChange() {
   broadcastExtension({method: 'syncStatusUpdate', status});
-  overrideBadge(getErrorBadge());
-}
-
-function isNetworkError(err) {
-  return (
-    err.name === 'TypeError' && /networkerror|failed to fetch/i.test(err.message) ||
-    err.code === 502
-  );
+  setErrorBadge(status.state === STATES.connected && (
+    !status.login
+      ? t('syncErrorRelogin')
+      : lastError && lastError.code !== 502 && (
+        lastError.name !== 'TypeError' ||
+        !/networkerror|failed to fetch/i.test(lastError.message)
+      ) && `${t('syncError')}\n${lastError.message.replace(/.{60,}?\s(?=.{30,})/g, '$&\n')}`
+  ) || '');
 }
 
 function isGrantError(err) {
@@ -263,22 +263,6 @@ function isGrantError(err) {
   if (err.code === 400 && /invalid_grant/.test(err.message)) return true;
   if (err.name === 'TokenError') return true;
   return false;
-}
-
-function getErrorBadge() {
-  if (status.state === STATES.connected &&
-      (!status.login || lastError && !isNetworkError(lastError))) {
-    return {
-      text: 'x',
-      color: '#F00',
-      title: !status.login ? 'syncErrorRelogin' : `${
-        t('syncError')
-      }\n---------------------\n${
-        // splitting to limit each line length
-        lastError.message.replace(/.{60,}?\s(?=.{30,})/g, '$&\n')
-      }`,
-    };
-  }
 }
 
 async function getDrive(name) {
