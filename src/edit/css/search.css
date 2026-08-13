@@ -77,7 +77,7 @@
       margin-right: -.5em;
     }
   }
-  [data-action] {
+  a[data-action] {
     display: flex;
     padding: 2px;
     cursor: default;
@@ -88,8 +88,8 @@
 
   /*********** case-sensitivity ****************/
 
-  [data-action="spaces"],
-  [data-action="case"] {
+  a[data-action="spaces"],
+  a[data-action="case"] {
     font-weight: bold;
     color: currentColor;
     padding: 0 .5em;
