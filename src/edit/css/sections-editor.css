@@ -180,7 +180,6 @@ $gripSpan: calc($gripH + 1px);
   }
   .CodeMirror-hscrollbar,
   .CodeMirror-scrollbar-filler {
-    top: $gripSpan;
     bottom: $gripSpan;
   }
 }
