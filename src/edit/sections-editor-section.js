@@ -79,14 +79,12 @@ export default class EditorSection {
         : ws.height;
       el.style.setProperty('--cm-height', h);
       el.$('.' + kCodeMirror).replaceWith(wrapper);
-    }, {
-      value: code,
-    }, _ => editor.applyScrollInfo(_, si));
+    }, code, {}, _ => editor.applyScrollInfo(_, si));
     Object.defineProperty(this, 'cm', {value: cm});
     cm.el = el;
     cm.editorSection = this;
     cm.setSize = EditorSection.onSetSize;
-    this.changeGeneration = cm.changeGeneration();
+    this.changeGeneration = cm.valueGen;
     this.removed = false;
     // using `handleEvent` implicitly
     el.$('.edit-actions').on('click', this);

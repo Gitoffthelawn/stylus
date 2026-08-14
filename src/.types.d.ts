@@ -56,7 +56,7 @@ declare interface StyleObj {
 }
 
 declare interface StyleSection {
-  code: string[];
+  code: string;
   /** Non-enumerable, added internally on demand in styleMan */
   _empty?: boolean;
   urls?: string[];

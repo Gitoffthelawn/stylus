@@ -24,18 +24,19 @@ const cmFactory = {
 
   /**
    * @param {HTMLElement | ((host: HTMLElement) => void)} place
+   * @param {string} [value]
    * @param {CodeMirror.EditorConfiguration} [options]
    * @param {(CM) => any} [finishInit]
    * @return {CM}
    */
-  create(place, options, finishInit) {
-    if (finishInit)
-      (options ??= {}).finishInit = finishInit;
-    const cm = CodeMirror(place, options);
+  create(place, value, options, finishInit) {
+    const cm = CodeMirror(place, {finishInit, value, ...options});
     cm.display.lineDiv.on('mousewheel', plusMinusOnWheel.bind(cm), true);
     cm.lastActive = 0;
-    // Re-allow resetModeState (see wp-patch-codemirror.js) and free up memory
+    // Re-allow resetModeState (see wp-patch-codemirror.js)
     cm.options.value = '';
+    cm.value = value;
+    cm.valueGen = cm.doc.history.generation;
     cms.add(cm);
     return cm;
   },

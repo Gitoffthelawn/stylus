@@ -32,9 +32,8 @@ export default function SourceEditor() {
   const cmpPos = CodeMirror.cmpPos;
   const [DEFAULT_TEMPLATE, TEMPLATE, TEMPLATE_DATA] = editor.template;
   const initialCode = style.id ? style.sourceCode : setupNewStyle(TEMPLATE || DEFAULT_TEMPLATE);
-  const cm = cmFactory.create($('#sections').appendChild($create('.single-editor')), {
+  const cm = cmFactory.create($('#sections').appendChild($create('.single-editor')), initialCode, {
     mode: getPreprocessorMode(style[UCD] ||= TEMPLATE_DATA),
-    value: initialCode,
   }, me => {
     const si = editor.applyScrollInfo(me) || {};
     editor.viewTo = si.viewTo;
@@ -131,7 +130,7 @@ export default function SourceEditor() {
     scrollToEditor: NOP,
   });
 
-  savedGeneration = cm.changeGeneration();
+  savedGeneration = cm.valueGen;
   cm.on('changes', (_, changes) => {
     dirty.modify('sourceGeneration', savedGeneration, cm.changeGeneration());
     livePreview();
