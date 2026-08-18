@@ -47,7 +47,7 @@ let stateCursorOptions;
 let stateDialog;
 let stateEditors;
 /** @type {EditorSection[]} */
-let lazyEditors;
+let lazySections;
 let stateInput2;
 let stateInput;
 let stateMarker;
@@ -179,19 +179,17 @@ Object.assign(CodeMirror.commands, COMMANDS);
 //region Find
 
 function initState({initReplace} = {}) {
-  const text = stateFind;
-  const textChanged = text !== stateLastFind;
-  if (textChanged) {
+  if (stateFind !== stateLastFind) {
     stateNumFound = 0;
     stateNumApplies = -1;
-    stateLastFind = text;
-    const match = text && text.match(RX_MAYBE_REGEXP);
+    stateLastFind = stateFind;
+    const match = stateFind && stateFind.match(RX_MAYBE_REGEXP);
     const string2regexpFlags = stateIcase ? 'gi' : 'g';
     let rxStr;
     stateRX = match && tryRegExp(match[1], 'g' + match[2].replace(/[guy]/g, '')) ||
-      text && (rxStr = stateIcase || text.includes('\n'));
-    if (rxStr || text && !stateRX) {
-      rxStr = stringAsRegExpStr(text);
+      stateFind && (rxStr = stateIcase || stateFind.includes('\n'));
+    if (rxStr || stateFind && !stateRX) {
+      rxStr = stringAsRegExpStr(stateFind);
       rxStr = new RegExp(
         stateLooseSpaces ? rxStr.replace(/\s+/g, '\\s+') : rxStr,
         string2regexpFlags);
@@ -218,7 +216,7 @@ function initState({initReplace} = {}) {
     stateCm);
   const cmExtra = $('body > :not(#sections) .CodeMirror');
   stateEditors = cmExtra ? [cmExtra[kCodeMirror]] : editor.getEditors();
-  lazyEditors = stateEditors.lazy && editor.sections;
+  lazySections = stateEditors.lazy && editor.sections;
 }
 
 function doSearch({
@@ -240,7 +238,8 @@ function doSearch({
   if (!foundInCode) clearMarker();
   if (!found) makeTargetVisible(null);
   const radiateFrom = foundInCode ? index :
-    lazyEditors ? lazyEditors.indexOf(cmStart.editorSection) : 0;
+    lazySections ? lazySections.indexOf(cmStart.editorSection) :
+      stateEditors.indexOf(cmStart);
   setupOverlay(radiateArray(radiateFrom));
   enableReplaceButtons(foundInCode);
   if (stateFind) {
@@ -259,7 +258,9 @@ function doSearchInEditors({cmStart, canAdvance, inApplies}) {
   const BOF = {line: 0, ch: 0};
   const EOF = getEOF(cmStart);
 
-  const start = lazyEditors ? lazyEditors.indexOf(cmStart.editorSection) : 0;
+  const start = lazySections
+    ? lazySections.indexOf(cmStart.editorSection)
+    : stateEditors.indexOf(cmStart);
   const total = stateEditors.length;
   let i = 0;
   let wrapAround = 0;
@@ -279,7 +280,7 @@ function doSearchInEditors({cmStart, canAdvance, inApplies}) {
 
   for (; i < total + wrapAround; i++) {
     index = (start + i * (reverse ? -1 : 1) + total) % total;
-    if (lazyEditors && (cm = lazyEditors[index]).init
+    if (lazySections && (cm = lazySections[index]).init
     && !(stateRX ? stateRX.test(cm.init.code) : cm.init.code.includes(stateFind)))
       continue;
     cm = stateEditors[index];
@@ -351,7 +352,7 @@ function doReplace() {
     doSearchInEditors({cmStart: getNextEditor(cm)});
   }
 
-  getStateSafe(cm).unclosedOp = false;
+  (cm.stateSearch ||= {}).unclosedOp = false;
   if (cm.curOp) cm.endOperation();
 
   if (cursor) {
@@ -365,8 +366,8 @@ function doReplaceAll() {
   clearMarker();
   const found = [];
   const generations = [];
-  for (let cm of lazyEditors || stateEditors) {
-    if (lazyEditors) {
+  for (let cm of lazySections || stateEditors) {
+    if (lazySections) {
       if (cm.init && !(stateRX ? !stateRX.test(cm.init.code) : !cm.init.code.includes(stateFind)))
         continue;
       cm = cm.cm;
@@ -395,7 +396,7 @@ function doReplaceInEditor({cm, pos, all = false}) {
     found = true;
     if (!cm.curOp) {
       cm.startOperation();
-      getStateSafe(cm).unclosedOp = true;
+      (cm.stateSearch ||= {}).unclosedOp = true;
     }
     if (stateRX) {
       const text = cm.getRange(cursor.pos.from, cursor.pos.to);
@@ -410,7 +411,7 @@ function doReplaceInEditor({cm, pos, all = false}) {
     cursor.findNext();
   }
   if (all) {
-    getStateSafe(cm).searchPos = null;
+    (cm.stateSearch ||= {}).searchPos = null;
   }
   return found;
 }
@@ -462,23 +463,24 @@ function setupOverlay(queue, debounced) {
   let canContinue = true;
   while (queue.length && canContinue) {
     let cm = queue.shift();
-    if (lazyEditors)
+    if (lazySections)
       cm = !(/**@type{EditorSection}*/cm).init && cm.cm;
     if (!cm || !document.body.contains(cm.display.wrapper))
       continue;
 
-    const cmState = getStateSafe(cm);
+    const cmState = cm.stateSearch ||= {};
+    const gen = cm.doc.history.generation;
+    const ovr = cmState.overlay;
     const query = stateRX2;
-
-    if (cmState.overlay?.query === query) {
+    if (cmState.gen === gen && ovr?.query === query) {
       if (cmState.unclosedOp && cm.curOp) cm.endOperation();
       cmState.unclosedOp = false;
       continue;
     }
-
-    if (cmState.overlay) {
+    cmState.gen = gen;
+    if (ovr) {
       if (!cm.curOp) cm.startOperation();
-      cm.removeOverlay(cmState.overlay);
+      cm.removeOverlay(ovr);
       cmState.overlay = null;
       canContinue = false;
     }
@@ -486,13 +488,12 @@ function setupOverlay(queue, debounced) {
     const hasMatches = query && cm.getSearchCursor(query, null, stateCursorOptions).find();
     if (hasMatches) {
       if (!cm.curOp) cm.startOperation();
-      cmState.overlay = {
+      cm.addOverlay(cmState.overlay = {
         query,
         token: tokenize,
         numFound: 0,
         tallyShownTime: 0,
-      };
-      cm.addOverlay(cmState.overlay);
+      });
       canContinue = false;
     }
 
@@ -538,7 +539,8 @@ function tokenize(stream) {
 }
 
 function annotateScrollbar(cm, query, icase) {
-  getStateSafe(cm).annotate = cm.showMatchesOnScrollbar(query, icase, ANNOTATE_SCROLLBAR_OPTIONS);
+  (cm.stateSearch ||= {}).annotate =
+    cm.showMatchesOnScrollbar(query, icase, ANNOTATE_SCROLLBAR_OPTIONS);
   debounce(showTally);
 }
 
@@ -674,14 +676,10 @@ function focusUndoButton() {
 //endregion
 //region Utility
 
-function getStateSafe(cm) {
-  return cm.stateSearch || (cm.stateSearch = {});
-}
-
 // determines search start position:
 // the cursor if it was moved or the last match
 function getContinuationPos({cm, reverse}) {
-  const cmSearchState = getStateSafe(cm);
+  const cmSearchState = cm.stateSearch ||= {};
   const posType = reverse ? 'from' : 'to';
   const searchPos = cmSearchState.searchPos?.[posType];
   const cursorPos = cm.getCursor(posType);
@@ -696,7 +694,7 @@ function getEOF(cm) {
 }
 
 function getNextEditor(cm, step = 1) {
-  return lazyEditors ? editor.getEditorSibling(cm, step) : cm;
+  return lazySections ? editor.getEditorSibling(cm, step) : cm;
 }
 
 // sets the editor to start the search in
@@ -731,7 +729,7 @@ function makeMatchVisible(cm, searchCursor) {
   stateCm = cm;
   // scroll within the editor
   const pos = searchCursor.pos;
-  Object.assign(getStateSafe(cm), {
+  Object.assign(cm.stateSearch ||= {}, {
     cursorPos: {
       from: cm.getCursor('from'),
       to: cm.getCursor('to'),
@@ -766,13 +764,13 @@ function showTally(num, numApplies) {
   if (!stateTally) return;
   if (num === undefined) {
     num = 0;
-    for (let cm of lazyEditors || stateEditors) {
-      if (lazyEditors) {
+    for (let cm of lazySections || stateEditors) {
+      if (lazySections) {
         if ((/**@type{EditorSection}*/cm).init)
           continue;
         cm = cm.cm;
       }
-      const {annotate, overlay} = getStateSafe(cm);
+      const {annotate, overlay} = cm.stateSearch ||= {};
       num +=
         annotate?.matches?.length ||
         overlay?.numFound ||
@@ -847,7 +845,7 @@ function restoreWindowScrollPos({immediately = true} = {}) {
 
 // produces [i, i+1, i-1, i+2, i-2, i+3, i-3, ...]
 function radiateArray(focalIndex) {
-  const arr = lazyEditors || stateEditors;
+  const arr = lazySections || stateEditors;
   if (focalIndex < 0 || focalIndex >= arr.length)
     return arr;
   const focus = arr[focalIndex];
