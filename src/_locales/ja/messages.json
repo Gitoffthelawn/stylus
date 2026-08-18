@@ -103,6 +103,14 @@
   "cm_lineWrapping": {
     "message": "ワードラップを有効にする"
   },
+  "cm_lineWrappingOff": {
+    "message": "$length$キロ以上の長い行が検出されました。ブラウザのクラッシュやハングアップを防ぐため、テキストの折り返し機能は無効化されました",
+    "placeholders": {
+      "length": {
+        "content": "$1"
+      }
+    }
+  },
   "cm_linter": {
     "message": "CSSを検証"
   },
@@ -388,6 +396,9 @@
   },
   "importLabel": {
     "message": "インポート"
+  },
+  "importPreprocessor": {
+    "message": "<@preprocessor> を含むスタイルは機能しません。このスタイルは<UserCSS>モードで作成されていないためです。"
   },
   "importReplaceLabel": {
     "message": "スタイルを上書き"

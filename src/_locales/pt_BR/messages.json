@@ -871,6 +871,9 @@
   "optionsAdvancedStyleViaASS": {
     "message": "Contornar <CSP> <style-src> através de <adoptedStyleSheets>"
   },
+  "optionsAdvancedStyleViaXhr": {
+    "message": "Modo de injeção instantânea"
+  },
   "optionsBadgeDisabled": {
     "message": "Cor de fundo quando desativado"
   },
@@ -973,6 +976,9 @@
   "parseUsercssError": {
     "message": "Não foi possível analisar o UserCSS:"
   },
+  "popupAutoResort": {
+    "message": "Reordenar estilos em pop-up após alternar"
+  },
   "popupBorders": {
     "message": "Adicionar margens laterais brancas "
   },
@@ -984,6 +990,9 @@
   },
   "popupHotkeysTooltip": {
     "message": "Clique para ver as teclas de atalho disponíveis"
+  },
+  "popupManageSiteStyles": {
+    "message": "Gerenciar estilos do site"
   },
   "popupMenuButtonTooltip": {
     "message": "Menu de ações"
@@ -1026,6 +1035,9 @@
   },
   "publishPush": {
     "message": "Enviar atualização"
+  },
+  "publishReconnect": {
+    "message": "Tente desconectar e então publique novamente"
   },
   "publishStyle": {
     "message": "Publicar estilo"
@@ -1174,6 +1186,17 @@
   "styleEnabledLabel": {
     "message": "Ativado"
   },
+  "styleForceApplied": {
+    "message": "Aplicado à força através de \"$INC$\" nas configurações de estilo",
+    "placeholders": {
+      "INC": {
+        "content": "$1"
+      }
+    }
+  },
+  "styleForceAppliedTab": {
+    "message": "Aplicado à força para a aba atual no menu de estilo"
+  },
   "styleForceTab": {
     "message": "Apenas na aba atual"
   },
@@ -1312,7 +1335,10 @@
     "message": "Como precaução de segurança, o browser proíbe extensões de afetar as páginas embutidas (como chrome://version, a página de novo separador predefinido no Chrome 61, about:addons, e assim sucessivamente) tal como páginas de outras extensões. Cada browser também restringe acesso à sua própria galeria de extensões (como Chrome Web Store ou AMO)"
   },
   "syncError": {
-    "message": "A sincronização falhou"
+    "message": "Sincronização mal-sucedida"
+  },
+  "syncErrorRelogin": {
+    "message": "Sincronização mal-sucedida. Tente iniciar a sessão novamente nas opções do Stylus."
   },
   "syncStorageErrorSaving": {
     "message": "O valor não pode ser guardado. Tente reduzir a quantidade de texto."
@@ -1325,6 +1351,9 @@
   },
   "toggleStylesHeading": {
     "message": "Alternar estilos"
+  },
+  "toggleStylesHint": {
+    "message": "Alternar os estilos inicialmente ativados, tal como <✱>"
   },
   "toggleStylesPerm": {
     "message": "permanentemente"
@@ -1343,6 +1372,14 @@
   },
   "unreachableAMOHint": {
     "message": "Para permitir o acesso abra<about:config>,clique com o botão direito na lista, clique em \"Novo\", depois em \"Booleano\", cole <privacy.resistFingerprinting.block_mozAddonManager> e clique em OK,<true>,OK, recarregue a página <addons.mozilla.org>."
+  },
+  "unreachableCSP": {
+    "message": "Tente ativar \"$optCSP$\" nas opções de Stylus.",
+    "placeholders": {
+      "optCSP": {
+        "content": "$1"
+      }
+    }
   },
   "unreachableContentScript": {
     "message": "Não foi possível comunicar com a página. Tente recarregar o separador."

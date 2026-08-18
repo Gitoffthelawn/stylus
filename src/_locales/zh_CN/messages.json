@@ -26,7 +26,7 @@
     "message": "域名"
   },
   "appliesHelp": {
-    "message": "使用「应用于」控件来控制此片段代码会应用于哪些 URL"
+    "message": "使用「应用于」控件来控制此片段代码会应用于哪些 URL。"
   },
   "appliesLabel": {
     "message": "应用于："
@@ -49,9 +49,6 @@
   "appliesToEverything": {
     "message": "所有页面"
   },
-  "appliesUrlOption": {
-    "message": "URL "
-  },
   "appliesUrlPrefixOption": {
     "message": "前缀"
   },
@@ -65,7 +62,7 @@
     "message": "备份"
   },
   "backupReminder": {
-    "message": "样式可能会因断电，浏览器漏洞，个人错误而<b>丢失</b>。<hr><b>备份您的数据：</b>在选项中配置「同步到云端」，或者在进行重大更改时手动点击「导出」按钮，导出备份。再或者，使用更加通用的办法，设置专门的备份工具，自动备份设备上包括浏览器数据的所有数据。"
+    "message": "样式可能会因断电，浏览器漏洞，个人错误而<b>丢失</b>。<hr><b>备份您的数据：</b>在选项中配置「同步到云端」，或者在进行重大更改时手动点击「导出」按钮，导出备份。<br>再或者，使用更加通用的办法，比如设置专门的备份工具，自动备份设备上包括浏览器数据的所有数据。"
   },
   "checkAllUpdates": {
     "message": "全部检查更新"
@@ -77,7 +74,7 @@
     "message": "检查更新"
   },
   "checkingForUpdate": {
-    "message": "正在检查更新..."
+    "message": "正在检查更新…"
   },
   "clickToUninstall": {
     "message": "点击卸载"
@@ -105,6 +102,14 @@
   },
   "cm_lineWrapping": {
     "message": "换行显示过长的行"
+  },
+  "cm_lineWrappingOff": {
+    "message": "检测到超过 $length$000 个字符的长行，已禁用自动折行，以确保浏览器不会崩溃或卡顿。",
+    "placeholders": {
+      "length": {
+        "content": "$1"
+      }
+    }
   },
   "cm_linter": {
     "message": "检查 CSS"
@@ -866,7 +871,7 @@
     "message": "（以分钟为单位，-1 = 无限制）"
   },
   "optionKeepAliveIdle": {
-    "message": "...即使浏览器处于不活跃状态"
+    "message": "…即使浏览器处于不活跃状态"
   },
   "optionKeepAliveNote": {
     "message": "如果您在一段时间内未与浏览器交互之后打开页面时，发现未应用样式的页面闪现（FOUC，flashing of unstyled content）的情况，请增加该值。\n\n-1 = ManifestV2 下的默认行为（无限制）。\n0 = ManifestV3 下的默认行为（半分钟）。\n\n缓存会占用 30MB 以上的内存，但重建缓存可能需要更多时间，并导致页面样式被延迟应用即 FOUC。具体严重程度取决于网站、网络速度、样式数量、内存大小和 CPU 性能。"
@@ -912,7 +917,7 @@
     "message": "按夜间时间"
   },
   "optionsAdvancedAutoSwitchSchemeNever": {
-    "message": "停用。忽略样式的深色／浅色模式设置。"
+    "message": "停用。忽略样式的深色/浅色模式设置。"
   },
   "optionsAdvancedContextDelete": {
     "message": "向编辑器右键菜单添加“删除”"
@@ -936,7 +941,7 @@
     "message": "如果在带有严格 <CSP>（<Content-Security-Policy>）规则的网站上无法加载样式中包含的图像或字体，请启用此设置。启用此设置将放宽 <CSP> 限制，从而允许加载必要的样式内容。\n\n⚠ 此选项仅适用于了解潜在安全隐患的高级用户，并且用户需要自行承担监控被允许内容的责任。请阅读有关「基于 CSS 的攻击」的更多信息，以妥善决定。\n\n另请注意，如果另一个已安装的扩展首先修改了网络响应，则不能保证此选项一定会生效。"
   },
   "optionsAdvancedSites": {
-    "message": "…仅在匹配的网站上"
+    "message": "…仅用于匹配的网站"
   },
   "optionsAdvancedSitesNote": {
     "message": "<abc.com> 单个网站。\n<*.abc.com> 网站 + 子域名。\n<-m.abc.com> 使用 \"-\" 前缀排除网站。\n<*> 所有网站（用于将匹配改为排除）。\n<#abc.com> 因含有无效符号而被忽略（译注：可用作注释）。\n<*://abc.*/xyz> 简单的通配符匹配，也被称为 glob 模式匹配。\n<https://abc.com/xyz> 完整 URL。\n　\n每项之间使用空格或换行符分隔。内容文本会在以下情况时自动保存：在输入框中按下 Ctrl-S 或 ⌘S，或点击输入框外部，或关闭选项窗口。"
@@ -975,7 +980,7 @@
     "message": "选项"
   },
   "optionsIconAuto": {
-    "message": "跟随深色／浅色模式"
+    "message": "跟随深色/浅色模式"
   },
   "optionsIconDark": {
     "message": "深色浏览器主题"
@@ -1130,7 +1135,7 @@
     "message": "在新窗口中打开编辑器"
   },
   "popupOpenEditInWindowTooltip": {
-    "message": "将编辑器标签页拖出为单独窗口时自动启用，\n将编辑器标签页拖入到其他窗口时自动禁用。\n　\n译注：\n从样式管理器中打开的编辑器也受此设置影响。\n可开启下面的“窗口不带工具栏与­标签页”设置，\n不显示标签页，来避免上述自动启用/禁用行为。"
+    "message": "将编辑器标签页拖出为单独窗口时自动启用，\n将编辑器标签页拖入到其他窗口时自动禁用。\n　\n译注：\n从样式管理器中打开的编辑器也受此设置影响。\n可开启下面的“窗口不带工具栏与­标签页”设置，\n不显示标签页，以杜绝上述自动启用/禁用行为。"
   },
   "popupSidePanelOpenHint": {
     "message": "右键点击：在侧栏中打开"
@@ -1142,10 +1147,10 @@
     "message": "在当前网站生效的样式数量"
   },
   "preferScheme": {
-    "message": "深色／浅色模式设置"
+    "message": "深色/浅色模式设置"
   },
   "preferSchemeAlways": {
-    "message": "目前已忽略（始终应用样式），因为已停用全局深色／浅色模式。"
+    "message": "此设置目前不生效（样式始终会应用），因为本拓展的全局深色/浅色模式已被设为停用。"
   },
   "preferSchemeDark": {
     "message": "深色"
@@ -1220,10 +1225,10 @@
     "message": "空格符号匹配任意数量的空格"
   },
   "searchNumberOfResults": {
-    "message": "已找到"
+    "message": "找到的匹配数量"
   },
   "searchNumberOfResults2": {
-    "message": "在代码和应用中匹配的数量"
+    "message": "代码和样式应用对象中找到的匹配数量"
   },
   "searchRegexp": {
     "message": "用 / 包裹正则语法，例如 /regex/，即可使用正则表达式匹配"
@@ -1309,13 +1314,13 @@
     "message": "</\\w+://(abc|def)\\.com/(?!xyz).*/> 正则表达式\n1) 正则必须完全匹配完整的 URL，以该正则为例，它用 <\\w://> 匹配 <https://>，用 <.*> 匹配域名后的路径。\n2) 不需要到处用 </> 转义。\n3) 不需要用 <^> 和 <$> 锚定正则匹配的起止位置，因为内部实现中已经用 <^(abc)$$> 锚定了。"
   },
   "sortDateNewestFirst": {
-    "message": "最新的优先"
+    "message": "从新到旧"
   },
   "sortDateOldestFirst": {
-    "message": "最旧的优先"
+    "message": "从旧到新"
   },
   "sortLabel": {
-    "message": "选择对已安装的样式应用的排序规则"
+    "message": "选择样式的排序方法"
   },
   "sortLabelTitleAsc": {
     "message": "标题升序"
@@ -1324,7 +1329,7 @@
     "message": "标题降序"
   },
   "sortStylesHelp": {
-    "message": "默认用「标题升序」(A - Z) 、「标题降序」则反之 (Z - A) \n「安装日期」 不等同于 样式的本地🆔 排序\n还有很多其它排序方式，可以通过多个条件进行排序。\n你也可以想象，在对一个多列的表格进行排序，并且选择可能带有（+）号的一组条件或单个条件进行排序。\n例如，若设为 \"启用（优先）+ 标题\"，将会把所有已启用的项目都排列在顶部，然后再以标题升序排列 （A - Z）的顺序应用到以启用和未启用的项目。"
+    "message": "使用排序下拉菜单选择样式排序方式。默认设置是「标题升序」（从 A 到 Z）。「标题降序」则反之（从 Z 到 A）。\n其他选项按照多个条件排序。排序从左到右进行，每个条件间用「+」号分隔。类似于在表格中，依次按照多个列来排序表格的行。\n例如，「已启用 + 标题」会先将所有已启用的样式置于顶部，再分别按标题升序（从 A 到 Z）来排序启用和禁用的样式。"
   },
   "sortStylesHelpTitle": {
     "message": "自定义排序"
@@ -1456,7 +1461,7 @@
     "message": "此样式仅在浅色模式下应用"
   },
   "stylePreferSchemeLabel": {
-    "message": "深色／浅色模式"
+    "message": "深色/浅色模式"
   },
   "styleRegexpInvalidExplanation": {
     "message": "部分 'regexp()' 中的正则表达式无效。"
@@ -1554,10 +1559,10 @@
     "message": "为当前标签页启用/禁用"
   },
   "toggleStyle": {
-    "message": "启用／禁用样式"
+    "message": "启用/禁用样式"
   },
   "toggleStylesHeading": {
-    "message": "启用／禁用样式"
+    "message": "启用/禁用样式"
   },
   "toggleStylesHint": {
     "message": "启用/禁用页面加载时应用的样式，和 <✱> 或 <`> 快捷键一样"
@@ -1654,7 +1659,7 @@
     "message": "是否将 UserCSS 样式的新建模板替换为当前代码？"
   },
   "usercssReplaceTemplateSectionBody": {
-    "message": "在此插入代码..."
+    "message": "在此插入代码…"
   },
   "versionInvalidOlder": {
     "message": "当前样式版本比已安装样式版本旧。"
