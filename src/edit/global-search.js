@@ -371,7 +371,7 @@ function doReplaceAll() {
         continue;
       cm = cm.cm;
     }
-    const gen = cm.history.generation;
+    const gen = cm.doc.history.generation;
     if (doReplaceInEditor({cm, all: true})) {
       generations.push([cm, gen]);
       found.push(cm);
