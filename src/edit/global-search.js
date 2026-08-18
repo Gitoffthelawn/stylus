@@ -60,6 +60,10 @@ let stateTally;
 
 const stateUndoHistory = [];
 const stateSearchInApplies = !editor.isUsercss;
+/** @param {EditorSection} section */
+const lazySectionMatches = ({init: {code}}) =>
+  stateRX ? stateRX.test(code)
+    : code.includes(stateFind);
 
 //endregion
 //region Events
@@ -280,8 +284,7 @@ function doSearchInEditors({cmStart, canAdvance, inApplies}) {
 
   for (; i < total + wrapAround; i++) {
     index = (start + i * (reverse ? -1 : 1) + total) % total;
-    if (lazySections && (cm = lazySections[index]).init
-    && !(stateRX ? stateRX.test(cm.init.code) : cm.init.code.includes(stateFind)))
+    if (lazySections && (cm = lazySections[index]).init && !lazySectionMatches(cm))
       continue;
     cm = stateEditors[index];
     if (i) {
@@ -368,7 +371,7 @@ function doReplaceAll() {
   const generations = [];
   for (let cm of lazySections || stateEditors) {
     if (lazySections) {
-      if (cm.init && !(stateRX ? !stateRX.test(cm.init.code) : !cm.init.code.includes(stateFind)))
+      if (cm.init && !lazySectionMatches(cm))
         continue;
       cm = cm.cm;
     }
@@ -464,7 +467,7 @@ function setupOverlay(queue, debounced) {
   while (queue.length && canContinue) {
     let cm = queue.shift();
     if (lazySections)
-      cm = !(/**@type{EditorSection}*/cm).init && cm.cm;
+      cm = (!(/**@type{EditorSection}*/cm).init || lazySectionMatches(cm)) && cm.cm;
     if (!cm || !document.body.contains(cm.display.wrapper))
       continue;
 
