@@ -1,5 +1,7 @@
 import {DB, UCD} from '@/js/consts';
-import {chromeLocal, GET_KEYS} from '@/js/storage-util';
+import {chromeLocal} from '@/js/storage-util';
+
+let GET_KEYS;
 
 export default class ChromeStorageDB {
 
@@ -7,6 +9,7 @@ export default class ChromeStorageDB {
     this._max = dbName === DB ? null : 1; // used only with DB
     this._mirror = mirror;
     this._prefix = dbName === DB ? 'style-' : `${dbName}-`;
+    GET_KEYS ??= !!chromeLocal.getKeys;
   }
 
   delete(id) {
