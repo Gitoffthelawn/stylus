@@ -208,7 +208,7 @@ export function openOptions(event, entry, button) {
  * @param {number} [button]
  */
 export async function openStyleFinder(event, entry, button) {
-  if (browserSidebar && (button === 2 || __values[pSideFinder]))
+  if (browserSidebar && !isSidebar && (button === 2 || __values[pSideFinder]))
     return openSidebar(`popup.html?${pSideFinder}`, close, {tabId});
   this.disabled = true;
   if (!styleFinder.on) await import('./search');
