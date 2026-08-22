@@ -103,6 +103,9 @@
   "cm_lineWrapping": {
     "message": "Tekstterugloop"
   },
+  "cm_linter": {
+    "message": "CSS valideren"
+  },
   "cm_matchHighlight": {
     "message": "Markeren"
   },
@@ -271,6 +274,9 @@
   "emptyCode": {
     "message": "Stijlsecties voor deze URL zijn leeg"
   },
+  "emptyStyle": {
+    "message": "Stijl is leeg"
+  },
   "enableStyleLabel": {
     "message": "Inschakelen"
   },
@@ -395,6 +401,9 @@
   },
   "importLabel": {
     "message": "Importeren"
+  },
+  "importPreprocessor": {
+    "message": "Code die afhankelijk is van <@preprocessor> werkt niet, omdat deze stijl niet in <UserCSS>-modus is aangemaakt."
   },
   "importReplaceLabel": {
     "message": "Stijl overschrijven"
@@ -1149,6 +1158,9 @@
   "replaceWith": {
     "message": "Vervangen door"
   },
+  "reportBug": {
+    "message": "De bug melden"
+  },
   "restoreTemplate": {
     "message": "De standaardsjabloon herstellen.\n\n(De momenteel geopende editorpagina’s worden niet gewijzigd.)"
   },
@@ -1169,6 +1181,9 @@
   },
   "searchGlobalStylesHint": {
     "message": "Omvat stijlen die op alle websites van toepassing zijn als de naam de zoektekst of de huidige website bevat"
+  },
+  "searchLooseSpaces": {
+    "message": "Spatie komt overeen met willekeurig aantal spaties"
   },
   "searchNumberOfResults": {
     "message": "Aantal overeenkomsten"
