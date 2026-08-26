@@ -108,7 +108,7 @@ export function setErrorBadge(text) {
   }
   badgeError = text;
   refreshIconBadgeColor();
-  const badge = {text: 'x'};
+  const badge = {text: text ? 'x' : ''};
   setBadgeText(badge);
   for (let tabId in tabCache) {
     tabId = +tabId;
