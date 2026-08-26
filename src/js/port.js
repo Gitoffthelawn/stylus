@@ -114,7 +114,8 @@ export function createPortExec(getTarget, {lock, once} = {}, target) {
     port.onmessageerror = onMessageError;
     queue = new Map();
     lastId = 0;
-    exec[CLIENT] = target;
+    if (!once)
+      exec[CLIENT] = target;
     if (!tracking && !once && navLocks)
       trackTarget(queue);
   }
