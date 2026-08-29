@@ -45,11 +45,11 @@ export default function SectionsEditor() {
   }, true);
   prefs.subscribe('editor.targetsFirst', (_, val) => {
     for (const sec of sections) {
-      (val ? sec.elLabel : sec.targetsEl.nextSibling).after(sec.targetsEl);
+      (val ? sec.elLabel : sec.elTargets.nextSibling).after(sec.elTargets);
     }
   });
   prefs.subscribe(pFavicons, (key, val) => {
-    if (val) iconize(sections.map(sec => sec.targetsEl));
+    if (val) iconize(sections.map(sec => sec.elTargets));
   });
   container.moveBefore ||= container.insertBefore;
   ACTIONS['remove-section'] = removeSection;
