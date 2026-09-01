@@ -122,6 +122,7 @@ export default function SectionsEditor() {
 
     jumpToEditor(i) {
       const {cm} = liveSections[i] || {};
+      if (!cm) return;
       editor.scrollToEditor(cm);
       cm.focus();
     },
