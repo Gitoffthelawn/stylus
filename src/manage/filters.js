@@ -37,8 +37,8 @@ function initFilters() {
       e.stopPropagation();
     }
   }, true);
-  elSearch.oninput = () => router.updateSearch(fltSearch, elSearch.value);
-  elSearchMode.oninput = () => router.updateSearch(fltMode, elSearchMode.value);
+  elSearch.oninput = () => router.updateSearch({[fltSearch]: elSearch.value});
+  elSearchMode.oninput = () => router.updateSearch({[fltMode]: elSearchMode.value});
 
   for (const el of [$('#search-wrapper a'), $('#sort-wrapper a')])
     el.dataset.title = el.title.replace(/.+\n?/g, '<p>$&</p>');
@@ -265,16 +265,15 @@ async function searchStyles({immediately, container} = {}) {
   }
   elSearch.lastValue = query;
   elSearchMode.lastValue = mode;
-
   const all = installed.children;
   const entries = container && container.children || container || all;
-  const idsToSearch = entries !== all && [...entries].map(el => el.styleId);
-  const ids = entries[0]
+  const idsToSearch = query && entries !== all && Array.from(entries, el => el.styleId);
+  const ids = query && new Set(entries.length
     ? await API.styles.searchDb({query, mode, ids: idsToSearch})
-    : [];
+    : []);
   let needsRefilter = false;
   for (const entry of entries) {
-    const isMatching = ids.includes(entry.styleId);
+    const isMatching = !query || ids.has(entry.styleId);
     if (entry.classList.contains('not-matching') !== !isMatching) {
       entry.classList.toggle('not-matching', !isMatching);
       needsRefilter = true;

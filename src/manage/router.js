@@ -83,19 +83,12 @@ export function updateHash(hash) {
   update();
 }
 
-/**
- * @param {Object|string} what - an object or a single key
- * @param {string} [value] - for `key` mode
- */
-export function updateSearch(what, value) {
+export function updateSearch(what) {
   const u = new URL(location);
   const usp = u.searchParams;
-  if (typeof what === 'object') {
-    for (const key in what)
-      if ((value = what[key])) usp.set(key, value);
-      else usp.delete(key);
-  } else if (value) usp.set(what, value);
-  else usp.delete(what);
+  for (const key in what)
+    if (what[key]) usp.set(key, what[key]);
+    else usp.delete(key);
   history.replaceState(history.state, null, `${u}`);
   buffer.pop();
   update();
