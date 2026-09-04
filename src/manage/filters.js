@@ -252,7 +252,7 @@ async function searchStyles({immediately, container} = {}) {
   && !immediately && !container) {
     return;
   }
-  const err = mode === 'url' && (!/^[-\w]+:/.test(query) || !tryURL(query))
+  const err = query && mode === 'url' && (!/^[-\w]+:/.test(query) || !tryURL(query))
     && t('searchStylesMatchUrlError');
   elSearch.setCustomValidity(err || '');
   if (err) {
