@@ -1,6 +1,6 @@
 import {UCD} from '@/js/consts';
 import {getMetaComment} from '@/js/style-util';
-import {debounce, stringAsRegExp, tryRegExp} from '@/js/util';
+import {debounce, stringAsRegExp, tryRegExp, tryURL} from '@/js/util';
 import {getByUrl} from './style-manager';
 import {styleMap} from './style-manager/util';
 
@@ -48,7 +48,7 @@ const MODES = Object.assign(Object.create(null), {
 export function searchDb({query, mode, ids}) {
   mode ??= 'all'; // handles `null` too
   let res = [];
-  if (mode === 'url' && query) {
+  if (mode === 'url' && query && tryURL(query)) {
     res = getByUrl(query).map(r => r.style.id);
   } else if (mode in MODES) {
     const modeHandler = MODES[mode];

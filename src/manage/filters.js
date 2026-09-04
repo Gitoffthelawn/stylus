@@ -1,6 +1,6 @@
 import {API} from '@/js/msg-api';
 import * as prefs from '@/js/prefs';
-import {debounce, t} from '@/js/util';
+import {debounce, t, tryURL} from '@/js/util';
 import {fitNameColumn, fitSizeColumn} from './render';
 import * as router from './router';
 import {updateStripes} from './sorter';
@@ -18,6 +18,7 @@ const getValue = el => el.type === 'checkbox'
 const fltSearch = 'search';
 export const fltMode = 'searchMode';
 const fltModePref = 'manage.searchMode';
+/** @type {HTMLInputElement} */
 let elSearch, elSearchMode;
 
 router.watch({search: [fltSearch, fltMode]}, ([search, mode]) => {
@@ -250,6 +251,13 @@ async function searchStyles({immediately, container} = {}) {
   && mode === elSearchMode.lastValue
   && !immediately && !container) {
     return;
+  }
+  const err = mode === 'url' && (!/^[-\w]+:/.test(query) || !tryURL(query))
+    && t('searchStylesMatchUrlError');
+  elSearch.setCustomValidity(err || '');
+  if (err) {
+    elSearch.reportValidity();
+    return container;
   }
   if (!immediately) {
     debounce(searchStyles, 150, {immediately: true});

@@ -1541,7 +1541,10 @@
   },
   "searchStylesMatchUrl": {
     "message": "By URL",
-    "description": "Option for `find styles` scope selector in style manager. See searchMatchUrlHint for more info."
+    "description": "Option for `find styles` scope selector in style manager"
+  },
+  "searchStylesMatchUrlError": {
+    "message": "Expecting a fully specified URL like https://www.example.org/"
   },
   "searchStylesMeta": {
     "message": "Metadata",
